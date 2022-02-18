@@ -15,11 +15,12 @@ public class PlayerController : MonoBehaviour
     private float _attackAnimResetTime = 1f;
     private float _attackAnimResetTimer;
 
+    public bool isMultiplayer = false;
+
     public Transform playerFeet;
     public LayerMask groundLayer;
     private Rigidbody2D _playerRb;
     private Animator _anim;
-
   
     // Start is called before the first frame update
     void Start()
@@ -32,9 +33,17 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        PlayerMove();
-        PlayerJump();
-        PlayerAttack();    
+        if (!isMultiplayer)
+        {
+            PlayerMove();
+            PlayerJump();
+            PlayerAttack();
+        }
+        else
+        {
+            //Multiplayer code here
+        }
+           
     }
 
     private void PlayerMove()
