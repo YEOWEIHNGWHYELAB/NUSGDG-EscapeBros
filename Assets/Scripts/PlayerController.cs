@@ -67,11 +67,11 @@ public class PlayerController : MonoBehaviour
         //Character to face correct direction
         if (_direction > 0) //moving right
         {
-            transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
+            transform.localRotation = Quaternion.Euler(transform.localRotation.x, 0, transform.localRotation.z);
         }
         else if (_direction < 0) //moving left
         {
-            transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
+            transform.localRotation = Quaternion.Euler(transform.localRotation.x, 180, transform.localRotation.z);
         }
     }
 
