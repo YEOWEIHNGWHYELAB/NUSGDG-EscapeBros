@@ -13,6 +13,7 @@ public class PlayerCombat : MonoBehaviour
 
     private Animator _anim;
     public float meleeAttackRange = 0.5f;
+    public int meleeAttackDamage = 5;
     public Transform attackPoint;
     public LayerMask enemyLayer;
     void Start()
@@ -42,7 +43,8 @@ public class PlayerCombat : MonoBehaviour
 
             foreach(Collider2D enemy in hitEnemies)
             {
-
+                Debug.Log(enemy.gameObject.name);
+                enemy.GetComponent<EnemyHealth>().TakeDamage(meleeAttackDamage);
             }
         }
 
@@ -51,5 +53,12 @@ public class PlayerCombat : MonoBehaviour
             _attackAnimResetTimer = _attackAnimResetTime;
             _attackType = 1;
         }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (attackPoint == null) return;
+
+        Gizmos.DrawWireSphere(attackPoint.position, meleeAttackRange);
     }
 }

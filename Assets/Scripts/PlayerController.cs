@@ -9,11 +9,6 @@ public class PlayerController : MonoBehaviour
     public float playerFeetRadius = 0.2f;
     private float _direction = 0f;
     private bool _isGrounded = false;
-    private int _attackType = 1;
-    private float _attackAnimDelayTime = 0.4f;
-    private float _attackAnimDelayTimer;
-    private float _attackAnimResetTime = 1f;
-    private float _attackAnimResetTimer;
 
     public bool isMultiplayer = false;
 
@@ -37,7 +32,6 @@ public class PlayerController : MonoBehaviour
         {
             PlayerMove();
             PlayerJump();
-            PlayerAttack();
         }
         else
         {
@@ -92,23 +86,4 @@ public class PlayerController : MonoBehaviour
         //control directly using transform of gameObject (its rework time)
     }
 
-    private void PlayerAttack()
-    {
-        _attackAnimDelayTimer -= Time.deltaTime;
-        _attackAnimResetTimer -= Time.deltaTime;
-        if (Input.GetButtonDown("Fire3") && _attackAnimDelayTimer < 0f)
-        {
-            _anim.SetTrigger("Attack" + _attackType.ToString());
-            _attackAnimDelayTimer = _attackAnimDelayTime;
-            _attackAnimResetTimer = _attackAnimResetTime;
-            if (_attackType < 3) _attackType++;
-            else _attackType = 1;
-        } 
-
-        if (_attackAnimResetTimer < 0f)
-        {
-            _attackAnimResetTimer = _attackAnimResetTime;
-            _attackType = 1;
-        }
-    }
 }
