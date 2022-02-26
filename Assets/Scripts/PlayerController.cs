@@ -2,88 +2,84 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent (typeof (Controller2D))]
 public class PlayerController : MonoBehaviour
 {
-    public float speed = 5f;
-    public float jumpForce = 3f;
-    public float playerFeetRadius = 0.2f;
-    private float _direction = 0f;
-    private bool _isGrounded = false;
+    public float jumpHeight = 4;
+    public float timeToJumpApex = .4f;
+    float accelerationTimeAirborne = .2f;
+    float accelerationTimeGrounded = .1f;
+    public float moveSpeed = 6;
 
-    public bool isMultiplayer = false;
+    float gravity;
+    float jumpVelocity;
+    Vector3 velocity;
+    float velocityXSmoothing;
 
-    public Transform playerFeet;
-    public LayerMask groundLayer;
-    private Rigidbody2D _playerRb;
+    Controller2D controller;
     private Animator _anim;
-  
-    // Start is called before the first frame update
+
     void Start()
     {
-        //Get reference to rigidbody component for left right movement and jumping
-        _playerRb = GetComponent<Rigidbody2D>();
         _anim = GetComponent<Animator>();
+        controller = GetComponent<Controller2D>();
+
+        gravity = -(2 * jumpHeight) / Mathf.Pow(timeToJumpApex, 2);
+        jumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
+        print("Gravity: " + gravity + "  Jump Velocity: " + jumpVelocity);
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (!isMultiplayer)
+        // Prevent accumulation of gravity
+        if (controller.collisions.above || controller.collisions.below)
         {
-            PlayerMove();
-            PlayerJump();
+            velocity.y = 0;
         }
-        else
-        {
-            //Multiplayer code here
-        }
-           
-    }
 
-    private void PlayerMove()
-    {
-        //Get direction keypress from user
-        _direction = Input.GetAxis("Horizontal");
-        _anim.SetFloat("AirSpeedY", _playerRb.velocity.y);
+        Vector2 input = new Vector2(
+            Input.GetAxisRaw("Horizontal"),
+            Input.GetAxisRaw("Vertical"));
 
-        //Move the player
-        if (_direction != 0)
+        _anim.SetFloat("AirSpeedY", velocity.y);
+        _anim.SetBool("Grounded", controller.collisions.below);
+
+        if (input.x != 0)
         {
-            _playerRb.velocity = new Vector2(_direction * speed, _playerRb.velocity.y);
             _anim.SetInteger("AnimState", 1);
         }
         else
         {
-            _playerRb.velocity = new Vector2(0, _playerRb.velocity.y);
             _anim.SetInteger("AnimState", 0);
         }
 
         //Character to face correct direction
-        if (_direction > 0) //moving right
+        if (input.x > 0) //moving right
         {
-            transform.localRotation = Quaternion.Euler(transform.localRotation.x, 0, transform.localRotation.z);
+            transform.localScale = new Vector3(0.9f, transform.localScale.y, transform.localScale.z);
+            //transform.localRotation = Quaternion.Euler(transform.localRotation.x, 0, transform.localRotation.z);
         }
-        else if (_direction < 0) //moving left
+        else if (input.x < 0) //moving left
         {
-            transform.localRotation = Quaternion.Euler(transform.localRotation.x, 180, transform.localRotation.z);
+            transform.localScale = new Vector3(-0.9f, transform.localScale.y, transform.localScale.z);
+            //transform.localRotation = Quaternion.Euler(transform.localRotation.x, 180, transform.localRotation.z);
         }
-    }
 
-    private void PlayerJump()
-    {
-        //Check if player is grounded
-        _isGrounded = Physics2D.OverlapCircle(playerFeet.position, playerFeetRadius, groundLayer);
-        _anim.SetBool("Grounded", _isGrounded);
-
-        //Handle player jumping, player jumps when jump key is pressed and its not midair
-        if (Input.GetButtonDown("Jump") && _isGrounded)
+        if (Input.GetKeyDown(KeyCode.Space) && controller.collisions.below)
         {
             _anim.SetTrigger("Jump");
-            _playerRb.velocity = new Vector2(_playerRb.velocity.x, jumpForce);
+            velocity.y = jumpVelocity;
         }
 
-        //multiplayer has issues with rigidbody
-        //control directly using transform of gameObject (its rework time)
+        float targetVelocityX = input.x * moveSpeed;
+        velocity.x = Mathf.SmoothDamp(
+            velocity.x, // Initial velocity
+            targetVelocityX, // Final velocity
+            ref velocityXSmoothing,
+            (controller.collisions.below) // Adjust time to transit
+                ? accelerationTimeGrounded // Grounded
+                : accelerationTimeAirborne); // Airborne
+        velocity.y += gravity * Time.deltaTime;
+        controller.Move(velocity * Time.deltaTime);
     }
-
 }
