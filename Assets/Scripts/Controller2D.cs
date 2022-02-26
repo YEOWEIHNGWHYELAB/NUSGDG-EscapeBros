@@ -5,7 +5,9 @@ using UnityEngine;
 [RequireComponent (typeof (BoxCollider2D))]
 public class Controller2D : MonoBehaviour
 {
-    public LayerMask collisionMask;
+    int collisionMask;
+
+    public LayerMask[] masks;
 
     const float skinWidth = 0.015f;
     public int horizontalRayCount = 4;
@@ -25,6 +27,10 @@ public class Controller2D : MonoBehaviour
     {
         boxCollider = GetComponent<BoxCollider2D>();
         CalculateRaySpacing();
+        foreach(LayerMask mask in masks)
+        {
+            collisionMask = collisionMask | mask;
+        }
     }
 
     public void Move(Vector3 velocity)
