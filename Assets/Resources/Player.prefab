@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 8267235652884565479}
   - component: {fileID: 830071801254824796}
   - component: {fileID: 830071801254824787}
-  - component: {fileID: 830071801254824786}
   - component: {fileID: 830071801254824797}
   - component: {fileID: 830071801254824793}
   - component: {fileID: 830071801254824794}
@@ -140,21 +139,6 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 128
---- !u!114 &830071801254824786
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 830071801254824795}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f4ecb719e3631547a6774009d886f08, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  jumpHeight: 1.5
-  timeToJumpApex: 0.4
-  moveSpeed: 3.5
 --- !u!95 &830071801254824797
 Animator:
   serializedVersion: 3
@@ -234,8 +218,8 @@ MonoBehaviour:
   m_PositionModel:
     SynchronizeEnabled: 1
     TeleportEnabled: 1
-    TeleportIfDistanceGreaterThan: 3
-    InterpolateOption: 2
+    TeleportIfDistanceGreaterThan: 0.5
+    InterpolateOption: 3
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 1
     ExtrapolateOption: 0
