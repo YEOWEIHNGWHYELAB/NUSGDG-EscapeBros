@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour
     float accelerationTimeGrounded = .1f;
     public float moveSpeed = 6;
 
+    public float xScale;
+
     float gravity;
     float jumpVelocity;
     Vector3 velocity;
@@ -27,6 +29,7 @@ public class PlayerController : MonoBehaviour
         gravity = -(2 * jumpHeight) / Mathf.Pow(timeToJumpApex, 2);
         jumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
         print("Gravity: " + gravity + "  Jump Velocity: " + jumpVelocity);
+        xScale = transform.localScale.x;
     }
 
     void Update()
@@ -56,12 +59,12 @@ public class PlayerController : MonoBehaviour
         //Character to face correct direction
         if (input.x > 0) //moving right
         {
-            transform.localScale = new Vector3(0.9f, transform.localScale.y, transform.localScale.z);
+            transform.localScale = new Vector3(xScale, transform.localScale.y, transform.localScale.z);
             //transform.localRotation = Quaternion.Euler(transform.localRotation.x, 0, transform.localRotation.z);
         }
         else if (input.x < 0) //moving left
         {
-            transform.localScale = new Vector3(-0.9f, transform.localScale.y, transform.localScale.z);
+            transform.localScale = new Vector3(-xScale, transform.localScale.y, transform.localScale.z);
             //transform.localRotation = Quaternion.Euler(transform.localRotation.x, 180, transform.localRotation.z);
         }
 
