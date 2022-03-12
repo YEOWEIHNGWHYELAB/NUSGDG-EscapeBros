@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using Photon.Pun;
 
 [RequireComponent (typeof (Controller2D))]
 public class PlayerController : MonoBehaviour
@@ -19,10 +21,12 @@ public class PlayerController : MonoBehaviour
     float velocityXSmoothing;
 
     Controller2D controller;
-    private Animator _anim;
+    PhotonView view;
+    Animator _anim;
 
     void Start()
     {
+        view = GetComponent<PhotonView>();
         _anim = GetComponent<Animator>();
         controller = GetComponent<Controller2D>();
 
@@ -34,28 +38,31 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        // Prevent accumulation of gravity
-        if (controller.collisions.above || controller.collisions.below)
+        if (view.IsMine)
         {
-            velocity.y = 0;
-        }
+            // Prevent accumulation of gravity
+            if (controller.collisions.above || controller.collisions.below)
+            {
+                velocity.y = 0;
+            }
 
-        Vector2 input = new Vector2(
-            Input.GetAxisRaw("Horizontal"),
-            Input.GetAxisRaw("Vertical"));
+            Vector2 input = new Vector2(
+                Input.GetAxisRaw("Horizontal"),
+                Input.GetAxisRaw("Vertical"));
 
-        _anim.SetFloat("AirSpeedY", velocity.y);
-        _anim.SetBool("Grounded", controller.collisions.below);
+            _anim.SetFloat("AirSpeedY", velocity.y);
+            _anim.SetBool("Grounded", controller.collisions.below);
 
-        if (input.x != 0)
-        {
-            _anim.SetInteger("AnimState", 1);
-        }
-        else
-        {
-            _anim.SetInteger("AnimState", 0);
-        }
-
+            if (input.x == 0)
+            {
+                // _anim.SetInteger("AnimState", 1);
+                _anim.SetBool("isRunning", false);
+            }
+            else
+            {
+                // _anim.SetInteger("AnimState", 0);
+                _anim.SetBool("isRunning", true);
+            }
         //Character to face correct direction
         if (input.x > 0) //moving right
         {
@@ -68,21 +75,22 @@ public class PlayerController : MonoBehaviour
             //transform.localRotation = Quaternion.Euler(transform.localRotation.x, 180, transform.localRotation.z);
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && controller.collisions.below)
-        {
-            _anim.SetTrigger("Jump");
-            velocity.y = jumpVelocity;
-        }
+            if (Input.GetKeyDown(KeyCode.Space) && controller.collisions.below)
+            {
+                _anim.SetTrigger("Jump");
+                velocity.y = jumpVelocity;
+            }
 
-        float targetVelocityX = input.x * moveSpeed;
-        velocity.x = Mathf.SmoothDamp(
-            velocity.x, // Initial velocity
-            targetVelocityX, // Final velocity
-            ref velocityXSmoothing,
-            (controller.collisions.below) // Adjust time to transit
-                ? accelerationTimeGrounded // Grounded
-                : accelerationTimeAirborne); // Airborne
-        velocity.y += gravity * Time.deltaTime;
-        controller.Move(velocity * Time.deltaTime);
+            float targetVelocityX = input.x * moveSpeed;
+            velocity.x = Mathf.SmoothDamp(
+                velocity.x, // Initial velocity
+                targetVelocityX, // Final velocity
+                ref velocityXSmoothing,
+                (controller.collisions.below) // Adjust time to transit
+                    ? accelerationTimeGrounded // Grounded
+                    : accelerationTimeAirborne); // Airborne
+            velocity.y += gravity * Time.deltaTime;
+            controller.Move(velocity * Time.deltaTime);
+        }
     }
 }
