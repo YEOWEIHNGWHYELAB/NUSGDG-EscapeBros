@@ -22,13 +22,13 @@ public class Player : MonoBehaviour
     PhotonView view;
     public GameObject myBar;
     public GameObject broBar;
-
+    Animator _anim;
     Controller2D controller;
 
     void Start()
     {
         view = GetComponent<PhotonView>();
-
+        _anim = GetComponent<Animator>();
         controller = GetComponent<Controller2D>();
 
         gravity = -(2 * jumpHeight) / Mathf.Pow(timeToJumpApex, 2);
@@ -53,6 +53,18 @@ public class Player : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space) && controller.collisions.below)
             {
                 velocity.y = jumpVelocity;
+            }
+
+
+            if (input.x == 0)
+            {
+                // _anim.SetInteger("AnimState", 1);
+                _anim.SetBool("isRunning", false);
+            }
+            else
+            {
+                // _anim.SetInteger("AnimState", 0);
+                _anim.SetBool("isRunning", true);
             }
 
             float targetVelocityX = input.x * moveSpeed;
