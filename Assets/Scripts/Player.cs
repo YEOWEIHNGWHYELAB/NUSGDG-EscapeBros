@@ -55,7 +55,7 @@ public class Player : MonoBehaviour
                 velocity.y = jumpVelocity;
             }
 
-
+            /*
             if (input.x == 0)
             {
                 // _anim.SetInteger("AnimState", 1);
@@ -66,6 +66,7 @@ public class Player : MonoBehaviour
                 // _anim.SetInteger("AnimState", 0);
                 _anim.SetBool("isRunning", true);
             }
+            */
 
             float targetVelocityX = input.x * moveSpeed;
             velocity.x = Mathf.SmoothDamp(
