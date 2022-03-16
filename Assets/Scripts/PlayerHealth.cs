@@ -95,13 +95,7 @@ public class PlayerHealth : MonoBehaviour
         
     }
 
-    public void HealthTest()
-    {
-        view.RPC("HealthTestRPC", RpcTarget.All);
-    }
-
-    [PunRPC]
-    private void HealthTestRPC() {
+    private void HealthTest() {
         if (isMaster)
         {
             if (Input.GetKeyDown("o"))
