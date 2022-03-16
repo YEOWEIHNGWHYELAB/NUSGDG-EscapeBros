@@ -20,6 +20,14 @@ public class PlayerHealth : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            isMaster = true;
+        } else
+        {
+            isMaster = false;
+        }
+
         view = GetComponent<PhotonView>();
         _anim = GetComponent<Animator>();
         _currHealth = _maxHealth;
@@ -33,12 +41,6 @@ public class PlayerHealth : MonoBehaviour
     }
     
     public void TakeDamage(int damage)
-    {
-        view.RPC("TakeDamageRPC", RpcTarget.All, damage);
-    }
-
-    [PunRPC]
-    public void TakeDamageRPC(int damage)
     {
         if (isMaster)
         {
@@ -71,13 +73,7 @@ public class PlayerHealth : MonoBehaviour
         Debug.Log("Player is dead!");
     }
 
-    public void Revive()
-    {
-        view.RPC("ReviveRPC", RpcTarget.All);
-    }
-
-    [PunRPC]
-    private void ReviveRPC()
+    private void Revive()
     {
         if (isMaster)
         {
@@ -126,14 +122,6 @@ public class PlayerHealth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            isMaster = true;
-        } else
-        {
-            isMaster = false; 
-        }
-
         if (view.IsMine)
         {
             HealthTest();
