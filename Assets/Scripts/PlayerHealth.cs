@@ -73,7 +73,7 @@ public class PlayerHealth : MonoBehaviour
 
     public void Revive()
     {
-        view.RPC("HealthTestRPC", RpcTarget.All);
+        view.RPC("ReviveRPC", RpcTarget.All);
     }
 
     [PunRPC]
