@@ -6,6 +6,7 @@ using Photon.Pun;
 
 public class CameraFollower : MonoBehaviour
 {
+    [SerializeField]
     private GameObject player;
     PhotonView view;
 
@@ -23,15 +24,12 @@ public class CameraFollower : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (view.IsMine)
+        if (PhotonNetwork.IsMasterClient)
         {
-            if (PhotonNetwork.IsMasterClient)
-            {
-                player = GameObject.Find("Player1(Clone)");
-            } else
-            {
-                player = GameObject.Find("Player2(Clone)");
-            }
+            player = GameObject.Find("Player1(Clone)");
+        } else
+        {
+            player = GameObject.Find("Player2(Clone)");
         }
         
         // Temporary vector
