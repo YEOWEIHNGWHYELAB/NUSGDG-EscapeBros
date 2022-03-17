@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using Photon.Pun;
 
 public class PlayerCombat : MonoBehaviour
 {
@@ -12,19 +14,25 @@ public class PlayerCombat : MonoBehaviour
     private float _attackAnimResetTimer;
 
     private Animator _anim;
+    PhotonView view;
     public float meleeAttackRange = 0.5f;
     public int meleeAttackDamage = 5;
     public Transform attackPoint;
     public LayerMask enemyLayer;
+
     void Start()
     {
+        view = GetComponent<PhotonView>();
         _anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        PlayerAttack();
+        if (view.IsMine)
+        {
+            PlayerAttack();
+        }
     }
 
     void PlayerAttack()
