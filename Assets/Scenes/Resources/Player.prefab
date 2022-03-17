@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 3399923742773577944}
   - component: {fileID: 4091282545373577731}
   - component: {fileID: 3372386788938611676}
+  - component: {fileID: 1608698223959811072}
   - component: {fileID: 7631452479854491435}
   m_Layer: 0
   m_Name: Player
@@ -322,6 +323,19 @@ MonoBehaviour:
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
+--- !u!114 &1608698223959811072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 830071801254824795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82645d7a7eb2cd84ca62d6e9569c7692, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  climbSpeed: 8
 --- !u!50 &7631452479854491435
 Rigidbody2D:
   serializedVersion: 4

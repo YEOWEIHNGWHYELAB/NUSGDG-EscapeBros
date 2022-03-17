@@ -4,16 +4,24 @@ using UnityEngine;
 
 public class CameraFollower : MonoBehaviour
 {
-    public GameObject player;
+    private GameObject player;
+
     // Start is called before the first frame update
     void Start()
     {
         
     }
 
+    void Awake()
+    {
+        // player = FindObjectOfType<Player>().gameObject;
+    }
+
     // Update is called once per frame
     void Update()
     {
+        player = FindObjectOfType<Player>().gameObject;
+
         // Temporary vector
         Vector3 temp = player.transform.position;
         temp.z = transform.position.z;
