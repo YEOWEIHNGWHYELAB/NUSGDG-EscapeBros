@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 
 public class EnemyHealthBar : MonoBehaviour
 {
@@ -9,8 +10,20 @@ public class EnemyHealthBar : MonoBehaviour
     public Color low;
     public Color high;
     public Vector3 offset;
+    PhotonView view;
+
+    private void Start()
+    {
+        view = GetComponent<PhotonView>();
+    }
 
     public void SetHealth(int health, int maxHealth)
+    {
+        view.RPC("SetHealthRPC", RpcTarget.All, health, maxHealth);
+    }
+
+    [PunRPC]
+    public void SetHealthRPC(int health, int maxHealth)
     {
         slider.gameObject.SetActive(health != 0);
         slider.value = health * 1.0f;
