@@ -44,6 +44,12 @@ public class EnemyHealth : MonoBehaviour
 
     void Die()
     {
+        view.RPC("DieRPC", RpcTarget.All);
+    }
+
+    [PunRPC]
+    void DieRPC()
+    {
         Destroy(gameObject);
     }
 
