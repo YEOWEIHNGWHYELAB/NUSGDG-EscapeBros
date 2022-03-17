@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
     float accelerationTimeGrounded = .1f;
     float moveSpeed = 6;
 
-    float gravity;
+    private float gravity;
     float jumpVelocity;
     Vector3 velocity;
     float velocityXSmoothing;
@@ -79,5 +79,15 @@ public class Player : MonoBehaviour
             velocity.y += gravity * Time.deltaTime;
             controller.Move(velocity * Time.deltaTime);
         }
+    }
+
+    public void DisableGravity()
+    {
+        gravity = 0;
+    }
+
+    public void EnableGravity()
+    {
+        gravity = -(2 * jumpHeight) / Mathf.Pow(timeToJumpApex, 2);
     }
 }
