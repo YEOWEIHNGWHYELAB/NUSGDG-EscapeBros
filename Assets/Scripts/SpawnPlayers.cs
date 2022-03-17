@@ -24,6 +24,8 @@ public class SpawnPlayers : MonoBehaviour
 
         Vector2 randomPosition = new Vector2(Random.Range(minX, maxX), Random.Range(minY, maxY));
 
+        // Debug.Log(player.name);
+
         if (isMaster)
         {
             PhotonNetwork.Instantiate("Player1", randomPosition, Quaternion.identity); // Specify name of game object inside resources folder you wanna spawn

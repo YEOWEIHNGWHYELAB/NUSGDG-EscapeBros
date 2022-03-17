@@ -27,10 +27,10 @@ public class CameraFollower : MonoBehaviour
         {
             if (PhotonNetwork.IsMasterClient)
             {
-                player = GameObject.Find("Player1");
+                player = GameObject.Find("Player1(Clone)");
             } else
             {
-                player = GameObject.Find("Player2");
+                player = GameObject.Find("Player2(Clone)");
             }
         }
         
