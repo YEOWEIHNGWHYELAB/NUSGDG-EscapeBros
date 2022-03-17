@@ -25,6 +25,8 @@ public class Player : MonoBehaviour
     Animator _anim;
     Controller2D controller;
 
+    public float xScale;
+
     void Start()
     {
         view = GetComponent<PhotonView>();
@@ -34,6 +36,7 @@ public class Player : MonoBehaviour
         gravity = -(2 * jumpHeight) / Mathf.Pow(timeToJumpApex, 2);
         jumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
         print("Gravity: " + gravity + "  Jump Velocity: " + jumpVelocity);
+        xScale = transform.localScale.x;
     }
 
     void Update()
@@ -50,23 +53,36 @@ public class Player : MonoBehaviour
                 Input.GetAxisRaw("Horizontal"),
                 Input.GetAxisRaw("Vertical"));
 
+            _anim.SetFloat("AirSpeedY", velocity.y);
+            _anim.SetBool("Grounded", controller.collisions.below);
+
             if (Input.GetKeyDown(KeyCode.Space) && controller.collisions.below)
             {
+                _anim.SetTrigger("Jump");
                 velocity.y = jumpVelocity;
             }
 
-            /*
-            if (input.x == 0)
+            if (input.x != 0)
             {
-                // _anim.SetInteger("AnimState", 1);
-                _anim.SetBool("isRunning", false);
+                _anim.SetInteger("AnimState", 1);
+                //_anim.SetBool("isRunning", false);
             }
             else
             {
-                // _anim.SetInteger("AnimState", 0);
-                _anim.SetBool("isRunning", true);
+                _anim.SetInteger("AnimState", 0);
+                //_anim.SetBool("isRunning", true);
             }
-            */
+
+            if (input.x > 0) //moving right
+            {
+                transform.localScale = new Vector3(xScale, transform.localScale.y, transform.localScale.z);
+                //transform.localRotation = Quaternion.Euler(transform.localRotation.x, 0, transform.localRotation.z);
+            }
+            else if (input.x < 0) //moving left
+            {
+                transform.localScale = new Vector3(-xScale, transform.localScale.y, transform.localScale.z);
+                //transform.localRotation = Quaternion.Euler(transform.localRotation.x, 180, transform.localRotation.z);
+            }
 
             float targetVelocityX = input.x * moveSpeed;
             velocity.x = Mathf.SmoothDamp(

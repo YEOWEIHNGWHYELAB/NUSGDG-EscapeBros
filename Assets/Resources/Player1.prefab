@@ -110,6 +110,7 @@ MonoBehaviour:
   timeToJumpApex: 0.4
   myBar: {fileID: 0}
   broBar: {fileID: 0}
+  xScale: 0
 --- !u!114 &830071801254824796
 MonoBehaviour:
   m_ObjectHideFlags: 0
