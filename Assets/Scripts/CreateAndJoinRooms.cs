@@ -14,14 +14,14 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
     {
         RoomOptions roomOptions = new RoomOptions();
         roomOptions.MaxPlayers = 2;
-        PhotonNetwork.CreateRoom(createInput.text);
+        PhotonNetwork.CreateRoom(createInput.text.ToUpper());
         // Debug.Log("Create Room: " + createInput.text);
     }
 
     // Note that when you create room, you automatically join that room.
     public void JoinRoom()
     {
-        PhotonNetwork.JoinRoom(joinInput.text);
+        PhotonNetwork.JoinRoom(joinInput.text.ToUpper());
         // Debug.Log("Joined to Room: " + joinInput.text);
     }
 

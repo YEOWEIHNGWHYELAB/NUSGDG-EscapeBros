@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 3372386788938611676}
   - component: {fileID: 1608698223959811072}
   - component: {fileID: 7631452479854491435}
+  - component: {fileID: 4748460182381005576}
   m_Layer: 0
   m_Name: Player1
   m_TagString: Untagged
@@ -214,7 +215,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 830071801254824795}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8efc6b1d64977384eb3405357896c656, type: 3}
   m_Name: 
@@ -222,10 +223,10 @@ MonoBehaviour:
   m_PositionModel:
     SynchronizeEnabled: 1
     TeleportEnabled: 1
-    TeleportIfDistanceGreaterThan: 3
-    InterpolateOption: 0
+    TeleportIfDistanceGreaterThan: 2
+    InterpolateOption: 4
     InterpolateMoveTowardsSpeed: 1
-    InterpolateLerpSpeed: 1
+    InterpolateLerpSpeed: 5
     ExtrapolateOption: 0
     ExtrapolateSpeed: 1
     ExtrapolateIncludingRoundTripTime: 1
@@ -261,6 +262,7 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 3399923742773577944}
   - {fileID: 3372386788938611676}
+  - {fileID: 4748460182381005576}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -358,6 +360,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &4748460182381005576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 830071801254824795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 0
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &830071801833228681
 GameObject:
   m_ObjectHideFlags: 0
