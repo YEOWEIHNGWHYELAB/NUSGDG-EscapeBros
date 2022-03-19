@@ -50,7 +50,7 @@ public class LadderMovement : MonoBehaviour
     {
         if (collision.tag == "Ladder")
         {
-            Debug.Log("Hello");
+            //Debug.Log("Hello");
             isLadder = true;
         }
     }
