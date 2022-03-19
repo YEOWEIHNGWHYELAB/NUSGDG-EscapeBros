@@ -37968,8 +37968,8 @@ MonoBehaviour:
   - {fileID: 629013257}
   - {fileID: 567304000}
   enemy: {fileID: 3418375845327189084, guid: 5f220b8a3e9d661438b3041e27f16698, type: 3}
-  startTimeBtwSpawns: 2
-  numberEnemy: 4
+  startTimeBtwSpawns: 0.5
+  numberEnemy: 17
 --- !u!4 &1577007966
 Transform:
   m_ObjectHideFlags: 0

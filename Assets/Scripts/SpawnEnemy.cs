@@ -20,7 +20,7 @@ public class SpawnEnemy : MonoBehaviour
 
     private void Update()
     {
-        if (PhotonNetwork.IsMasterClient == false || PhotonNetwork.CurrentRoom.PlayerCount != 2 || currentNumberEnemy >= numberEnemy || spawnCount == 1)
+        if (PhotonNetwork.IsMasterClient == false || PhotonNetwork.CurrentRoom.PlayerCount != 2 || currentNumberEnemy >= numberEnemy || spawnCount > 17)
         {
             return;
         }
