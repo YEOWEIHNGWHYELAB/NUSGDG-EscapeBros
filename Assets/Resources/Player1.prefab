@@ -139,7 +139,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   meleeAttackRange: 1
-  meleeAttackDamage: 2
+  meleeAttackDamage: 20
   attackPoint: {fileID: 830071801833228680}
   enemyLayer:
     serializedVersion: 2
