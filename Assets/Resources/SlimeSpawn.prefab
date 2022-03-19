@@ -215,6 +215,7 @@ GameObject:
   - component: {fileID: -686517321140269260}
   - component: {fileID: -3017812551714987493}
   - component: {fileID: -4762479287359007078}
+  - component: {fileID: 6706197805221202306}
   m_Layer: 7
   m_Name: SlimeSpawn
   m_TagString: Untagged
@@ -352,7 +353,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3418375845327189084}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8efc6b1d64977384eb3405357896c656, type: 3}
   m_Name: 
@@ -399,9 +400,26 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: -686517321140269260}
   - {fileID: -3017812551714987493}
+  - {fileID: 6706197805221202306}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &6706197805221202306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3418375845327189084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 1
+  m_UseLocal: 1
 --- !u!1 &3418375845341283710
 GameObject:
   m_ObjectHideFlags: 0
