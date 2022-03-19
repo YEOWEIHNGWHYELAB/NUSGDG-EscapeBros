@@ -139,7 +139,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   meleeAttackRange: 1
-  meleeAttackDamage: 20
+  meleeAttackDamage: 2
   attackPoint: {fileID: 830071801833228680}
   enemyLayer:
     serializedVersion: 2
@@ -176,7 +176,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.07921118, y: 0.6920415}
+  m_Offset: {x: -0.08279911, y: 0.6920415}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
@@ -187,7 +187,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.5978775, y: 1.2247176}
+  m_Size: {x: 0.8490192, y: 1.2247176}
   m_EdgeRadius: 0
 --- !u!114 &830071801254824794
 MonoBehaviour:
@@ -206,8 +206,8 @@ MonoBehaviour:
     m_Bits: 64
   - serializedVersion: 2
     m_Bits: 128
-  horizontalRayCount: 2
-  verticalRayCount: 2
+  horizontalRayCount: 3
+  verticalRayCount: 3
 --- !u!114 &3399923742773577944
 MonoBehaviour:
   m_ObjectHideFlags: 0
