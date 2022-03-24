@@ -393,7 +393,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3418375845327189084}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b16f5880abbc1d74592267e072b83eaf, type: 3}
   m_Name: 
@@ -401,6 +401,10 @@ MonoBehaviour:
   playersInGame:
   - {fileID: 0}
   - {fileID: 0}
+  nearestPlayer:
+  - {fileID: 0}
+  damagePeriod: 1
+  speed: 1
 --- !u!1 &3418375845341283710
 GameObject:
   m_ObjectHideFlags: 0

@@ -40,12 +40,12 @@ public class PlayerHealth : MonoBehaviour
         // Debug.Log("Health initialized!");
     }
     
-    public void TakeDamage(int damage)
+    private void TakeDamage(int damage, bool isMaster)
     {
         if (isMaster)
         {
             _currHealth -= damage;
-            myBar.GetComponent<UIHealthBar>().SetMaxHealth(_currHealth);
+            myBar.GetComponent<UIHealthBar>().SetHealth(_currHealth);
             _anim.SetTrigger("Hurt");
 
             if (_currHealth <= 0)
@@ -56,7 +56,7 @@ public class PlayerHealth : MonoBehaviour
         } else
         {
             _currHealth -= damage;
-            broBar.GetComponent<UIHealthBar>().SetMaxHealth(_currHealth);
+            broBar.GetComponent<UIHealthBar>().SetHealth(_currHealth);
             _anim.SetTrigger("Hurt");
 
             if (_currHealth <= 0)
@@ -73,24 +73,57 @@ public class PlayerHealth : MonoBehaviour
         Debug.Log("Player is dead!");
     }
 
-    private void Revive()
+    private void Revive(bool isMaster)
     {
         if (isMaster)
         {
             _currHealth = _maxHealth;
-            myBar.GetComponent<UIHealthBar>().SetMaxHealth(_maxHealth);
+            myBar.GetComponent<UIHealthBar>().SetHealth(_maxHealth);
             _anim.Rebind();
             _anim.Update(0f);
         } else
         {
             _currHealth = _maxHealth;
-            broBar.GetComponent<UIHealthBar>().SetMaxHealth(_maxHealth);
+            broBar.GetComponent<UIHealthBar>().SetHealth(_maxHealth);
             _anim.Rebind();
             _anim.Update(0f);
         }
         
     }
 
+    public void HealthControl(bool takeDamage, bool isMaster, int healthDelta)
+    {
+        if (isMaster)
+        {
+            if (takeDamage)
+            {
+                // _currHealth -= healthDelta;
+                // myBar.GetComponent<UIHealthBar>().SetHealth(_currHealth);
+                TakeDamage(healthDelta, isMaster);
+            }
+            else
+            {
+                // _currHealth += healthDelta;
+                // myBar.GetComponent<UIHealthBar>().SetHealth(_currHealth);
+                Revive(isMaster);
+            }
+        }
+        else
+        {
+            if (takeDamage)
+            {
+                // _currHealth -= healthDelta;
+                // broBar.GetComponent<UIHealthBar>().SetHealth(_currHealth);
+                TakeDamage(healthDelta, isMaster);
+            }
+            else
+            {
+                // _currHealth += healthDelta;
+                // broBar.GetComponent<UIHealthBar>().SetHealth(_currHealth);
+                Revive(isMaster);
+            }
+        }
+    }
     private void HealthTest() {
         if (isMaster)
         {
