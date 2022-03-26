@@ -12,13 +12,11 @@ public class LadderMovement : MonoBehaviour
     Vector2 velocity;
 
     private Rigidbody2D rb;
-    Controller2D controller;
     Player playerMovement;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        controller = GetComponent<Controller2D>();
         playerMovement = GetComponent<Player>();
     }
 
@@ -38,8 +36,8 @@ public class LadderMovement : MonoBehaviour
         if (isCimbling)
         {
             playerMovement.DisableGravity();
-            velocity = new Vector2(velocity.x, vertical * climbSpeed);
-            controller.Move(velocity * Time.deltaTime);
+            rb.velocity = new Vector2(velocity.x, vertical * climbSpeed);
+            //controller.Move(velocity * Time.deltaTime);
         } else
         {
             playerMovement.EnableGravity();
