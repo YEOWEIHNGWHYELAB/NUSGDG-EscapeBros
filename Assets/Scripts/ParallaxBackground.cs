@@ -1,4 +1,4 @@
- using UnityEngine;
+using UnityEngine;
 
 public class ParallaxBackground : MonoBehaviour
 {
@@ -24,17 +24,18 @@ public class ParallaxBackground : MonoBehaviour
     }
 
     // Update is called once per frame
-    public virtual void Update()
+    public virtual void LateUpdate()
     {
+
         Vector3 deltaMovement = cameraTransform.position - lastCameraPosition;
-        transform.position += new Vector3(deltaMovement.x * parallaxEffectMultiplier.x, deltaMovement.y /* parallaxEffectMultiplier.y*/);
+        transform.position += new Vector3(deltaMovement.x * parallaxEffectMultiplier.x, deltaMovement.y * parallaxEffectMultiplier.y);
         lastCameraPosition = cameraTransform.position;
 
         if (isInfiniteHorizontal)
         {
             if (Mathf.Abs(cameraTransform.position.x - transform.position.x) >= textureUnitSizeX)
             {
-                float offsetPositionX =  (cameraTransform.position.x - transform.position.x) % textureUnitSizeX;
+                float offsetPositionX = (cameraTransform.position.x - transform.position.x) % textureUnitSizeX;
                 transform.position = new Vector3(cameraTransform.position.x + offsetPositionX, cameraTransform.position.y);
             }
         }
@@ -45,6 +46,6 @@ public class ParallaxBackground : MonoBehaviour
                 float offsetPositionY = (cameraTransform.position.y - transform.position.y) % textureUnitSizeY;
                 transform.position = new Vector3(transform.position.x, offsetPositionY + cameraTransform.position.y);
             }
-        } 
+        }
     }
 }
