@@ -25,10 +25,15 @@ public class PlayerMovement : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         if (view.IsMine)
         {
+            if (PhotonNetwork.CurrentRoom.PlayerCount == 2)
+            {
+                GetComponent<PhotonTransformView>().enabled = false;
+            }
+
             float input = Input.GetAxis("Horizontal");
             rb.velocity = new Vector2(input * speed, rb.velocity.y);
             if (input > 0) //moving right
