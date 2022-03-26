@@ -5,22 +5,34 @@ using Photon.Pun;
 
 public class PlayerMovement : MonoBehaviour
 {
+    private const float BOXCAST_ANGLE = 0;
+    private const float BOXCAST_DISTANCE = 0.03f;
+
+    [SerializeField] float speed;
+    [SerializeField] float jumpPower;
     PhotonView view;
     Animator _anim;
+    BoxCollider2D collider;
+    Rigidbody2D rb;
+
+    [SerializeField] LayerMask groundLayer;
 
     // Start is called before the first frame update
     void Start()
     {
         view = GetComponent<PhotonView>();
         _anim = GetComponent<Animator>();
+        collider = GetComponent<BoxCollider2D>();
+        rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (view.IsMine)
         {
             float input = Input.GetAxis("Horizontal");
+            rb.velocity = new Vector2(input * speed, rb.velocity.y);
             if (input > 0) //moving right
             {
                 transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
@@ -29,6 +41,33 @@ public class PlayerMovement : MonoBehaviour
             {
                 transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
             }
+            if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.Space))
+            {
+                Jump();
+            }
         }
     }
+
+    private void Jump()
+    {
+        if (IsGrounded())
+        {
+            rb.velocity = new Vector2(rb.velocity.x, jumpPower);
+        }
+    }
+
+    private bool IsGrounded()
+    {
+        RaycastHit2D raycastHit = Physics2D.BoxCast(
+            collider.bounds.center,
+            collider.bounds.size,
+            BOXCAST_ANGLE,
+            Vector2.down,
+            BOXCAST_DISTANCE,
+            groundLayer);
+        bool isOnGround = raycastHit.collider != null;
+        return isOnGround;
+    }
 }
+
+
