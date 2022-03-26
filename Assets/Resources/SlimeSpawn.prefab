@@ -211,6 +211,7 @@ GameObject:
   - component: {fileID: 3418375845327189074}
   - component: {fileID: 3418375845327189075}
   - component: {fileID: 3418375845327189073}
+  - component: {fileID: 3836331832897653297}
   - component: {fileID: 3418375845327189072}
   - component: {fileID: -686517321140269260}
   - component: {fileID: -4762479287359007078}
@@ -304,6 +305,27 @@ MonoBehaviour:
   maxHealth: 100
   currentHealth: 0
   enemyHealthbar: {fileID: 3418375846042311767}
+--- !u!50 &3836331832897653297
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3418375845327189084}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!61 &3418375845327189072
 BoxCollider2D:
   m_ObjectHideFlags: 0
