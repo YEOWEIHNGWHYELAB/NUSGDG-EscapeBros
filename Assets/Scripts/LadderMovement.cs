@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class LadderMovement : MonoBehaviour
@@ -12,12 +10,11 @@ public class LadderMovement : MonoBehaviour
     Vector2 velocity;
 
     private Rigidbody2D rb;
-    Player playerMovement;
+
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        playerMovement = GetComponent<Player>();
     }
 
     // Update is called once per frame
@@ -35,20 +32,14 @@ public class LadderMovement : MonoBehaviour
     {
         if (isCimbling)
         {
-            playerMovement.DisableGravity();
             rb.velocity = new Vector2(velocity.x, vertical * climbSpeed);
-            //controller.Move(velocity * Time.deltaTime);
-        } else
-        {
-            playerMovement.EnableGravity();
-        }
+        } 
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Ladder")
         {
-            //Debug.Log("Hello");
             isLadder = true;
         }
     }
