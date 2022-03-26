@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float jumpPower;
     PhotonView view;
     Animator _anim;
-    BoxCollider2D collider;
+    BoxCollider2D boxCollider;
     Rigidbody2D rb;
 
     [SerializeField] LayerMask groundLayer;
@@ -22,7 +22,7 @@ public class PlayerMovement : MonoBehaviour
     {
         view = GetComponent<PhotonView>();
         _anim = GetComponent<Animator>();
-        collider = GetComponent<BoxCollider2D>();
+        boxCollider = GetComponent<BoxCollider2D>();
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -45,6 +45,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 Jump();
             }
+            UpdateAnimation(input);
         }
     }
 
@@ -52,6 +53,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (IsGrounded())
         {
+            _anim.SetTrigger("Jump");
             rb.velocity = new Vector2(rb.velocity.x, jumpPower);
         }
     }
@@ -59,14 +61,29 @@ public class PlayerMovement : MonoBehaviour
     private bool IsGrounded()
     {
         RaycastHit2D raycastHit = Physics2D.BoxCast(
-            collider.bounds.center,
-            collider.bounds.size,
+            boxCollider.bounds.center,
+            boxCollider.bounds.size,
             BOXCAST_ANGLE,
             Vector2.down,
             BOXCAST_DISTANCE,
             groundLayer);
         bool isOnGround = raycastHit.collider != null;
         return isOnGround;
+    }
+
+    private void UpdateAnimation(float input) {
+        _anim.SetFloat("AirSpeedY", rb.velocity.y);
+        _anim.SetBool("Grounded", IsGrounded());
+        if (input != 0)
+        {
+            _anim.SetInteger("AnimState", 1);
+            //_anim.SetBool("isRunning", false);
+        }
+        else
+        {
+            _anim.SetInteger("AnimState", 0);
+            //_anim.SetBool("isRunning", true);
+        }
     }
 }
 
