@@ -10,28 +10,28 @@ public class SpawnEnemy : MonoBehaviour
     public float startTimeBtwSpawns;
     float timeBtwSpawns;
     public int numberEnemy;
-    private int currentNumberEnemy;
     private int spawnCount = 0;
+    private int spawnCountLimit;
 
     private void Start()
     {
         timeBtwSpawns = startTimeBtwSpawns;
+        spawnCountLimit = spawnPoints.Length;
     }
 
     private void Update()
     {
-        if (PhotonNetwork.IsMasterClient == false || PhotonNetwork.CurrentRoom.PlayerCount != 2 || currentNumberEnemy >= numberEnemy)
+        if (PhotonNetwork.IsMasterClient == false || PhotonNetwork.CurrentRoom.PlayerCount != 2 || spawnCount >= numberEnemy)
         {
             return;
         }
 
         if (timeBtwSpawns <= 0)
         {
+            Vector3 SpawnPosition = spawnPoints[spawnCount].position;
+            GameObject currEnemy = PhotonNetwork.Instantiate(enemy.name, SpawnPosition, Quaternion.identity);
+            currEnemy.GetComponent<EnemyController>().GetSpawn(spawnPoints[spawnCount].Find("LeftPatrolMax"), spawnPoints[spawnCount].Find("RightPatrolMax"), spawnPoints[spawnCount]);
             spawnCount += 1;
-
-            Vector3 SpawnPosition = spawnPoints[Random.Range(0, spawnPoints.Length)].position;
-            PhotonNetwork.Instantiate(enemy.name, SpawnPosition, Quaternion.identity);
-            currentNumberEnemy += 1;
 
             timeBtwSpawns = startTimeBtwSpawns;
         }
