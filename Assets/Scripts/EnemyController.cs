@@ -16,6 +16,7 @@ public class EnemyController : MonoBehaviour
     private Vector2 targetPatrol;
     private float currentDamageTimeDelta = 0.0F;
     private bool isMovingLeft = false;
+    private float xScale;
 
     [SerializeField]
     private Transform referencePos;
@@ -40,6 +41,8 @@ public class EnemyController : MonoBehaviour
 
         playersInGame[0] = GameObject.Find("Player1(Clone)");
         playersInGame[1] = GameObject.Find("Player2(Clone)");
+
+        xScale = transform.localScale.x;
     }
     
     // Update is called once per frame
@@ -52,6 +55,7 @@ public class EnemyController : MonoBehaviour
 
             if (distancePlayer1 <= enemyAttackDistance || distancePlayer2 <= enemyAttackDistance)
             {
+                Vector2 oldPos = transform.position;
                 if (distancePlayer1 <= distancePlayer2)
                 {
                     if (distancePlayer1 <= 1F)
@@ -99,6 +103,17 @@ public class EnemyController : MonoBehaviour
                     targetX.y = transform.position.y;
                     transform.position = Vector2.MoveTowards(transform.position, targetX, speed * Time.deltaTime);
                 }
+
+                float direction = transform.position.x - oldPos.x;
+
+                if (direction > 0)
+                {
+                    isMovingLeft = false;
+                }
+                else if (direction < 0)
+                {
+                    isMovingLeft = true;
+                }
             } 
             else
             {
@@ -124,6 +139,19 @@ public class EnemyController : MonoBehaviour
                 {
                     isMovingLeft = true;
                 }
+            }
+
+
+
+            if (!isMovingLeft) //moving right
+            {
+                transform.localScale = new Vector3(xScale, transform.localScale.y, transform.localScale.z);
+                //transform.localRotation = Quaternion.Euler(transform.localRotation.x, 0, transform.localRotation.z);
+            }
+            else if (isMovingLeft) //moving left
+            {
+                transform.localScale = new Vector3(-xScale, transform.localScale.y, transform.localScale.z);
+                //transform.localRotation = Quaternion.Euler(transform.localRotation.x, 180, transform.localRotation.z);
             }
         }
     }
