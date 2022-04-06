@@ -9,6 +9,10 @@ public class GameManager : MonoBehaviour
     public static bool playerTwoReady;
     public static int currLevel = 0;
     private int maxLevel = 2;
+    private float resetTime = 1.0F;
+    private float timeToReset;
+    private PhotonView view;
+
     private Vector2[] levelStartCoord =
     {
         new Vector2(-4.79f, 0.53f),
@@ -19,6 +23,8 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        view = GetComponent<PhotonView>();
+        timeToReset = resetTime;
         resetReady();
     }
     // Update is called once per frame
@@ -29,7 +35,13 @@ public class GameManager : MonoBehaviour
             if (currLevel >= maxLevel) { currLevel = 0; }
             else { currLevel++; }
             teleportPlayers(currLevel);
-            resetReady();
+
+            timeToReset -= Time.deltaTime;
+            if (timeToReset <= 0)
+            {
+                resetReady();
+                timeToReset = resetTime;
+            }   
         }
     }
 
@@ -45,7 +57,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void resetReady()
+    public void resetReady()
+    {
+        view.RPC("resetReadyRPC", RpcTarget.All);
+    }
+
+    [PunRPC]
+    void resetReadyRPC()
     {
         playerOneReady = false;
         playerTwoReady = false;

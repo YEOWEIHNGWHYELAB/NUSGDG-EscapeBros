@@ -425,8 +425,7 @@ MonoBehaviour:
   - {fileID: 0}
   spawnPoint: {fileID: 0}
   referencePos: {fileID: 0}
-  leftMax: {fileID: 0}
-  rightMax: {fileID: 0}
+  enemyAttackDistance: 3
   damagePeriod: 1
   speed: 1
 --- !u!1 &3418375845341283710

@@ -1,30 +1,84 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using Photon.Pun;
+
 
 public class Teleporter : MonoBehaviour
 {
+    private PhotonView view;
+    private bool isMaster;
+
+    void Start()
+    {
+        view = GetComponent<PhotonView>();
+        isMaster = PhotonNetwork.IsMasterClient;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.name == "Player1(Clone)")
+        if (isMaster)
         {
-            GameManager.playerOneReady = true;
-        }
-        if (collision.name == "Player2(Clone)")
-        {
-            GameManager.playerTwoReady = true;
+            if (collision.name == "Player1(Clone)")
+            {
+                PlayerReadyController(true, true);
+            }
+            
+            if (collision.name == "Player2(Clone)")
+            {
+                PlayerReadyController(false, true);
+            }
+
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.name == "Player1(Clone)")
+        if (isMaster)
         {
-            GameManager.playerOneReady = false;
+            if (collision.name == "Player1(Clone)")
+            {
+                PlayerReadyController(true, false);
+            }
+
+            if (collision.name == "Player2(Clone)")
+            {
+                PlayerReadyController(false, false);
+            }
+
         }
-        if (collision.name == "Player2(Clone)")
+    }
+
+    public void PlayerReadyController(bool isPlayer1, bool isReady)
+    {
+        view.RPC("PlayerReadyControllerRPC", RpcTarget.All, isPlayer1, isReady);
+    }
+
+    [PunRPC]
+    void PlayerReadyControllerRPC(bool isPlayer1, bool isReady)
+    {
+        if (isPlayer1)
         {
-            GameManager.playerTwoReady = false;
+            if (isReady)
+            {
+                GameManager.playerOneReady = true;
+            }
+            else
+            {
+                GameManager.playerTwoReady = false;
+            }
+        }
+        else
+        {
+            if (isReady)
+            {
+                GameManager.playerTwoReady = true;
+            }
+            else
+            {
+                GameManager.playerTwoReady = false;
+            }
         }
     }
 }
