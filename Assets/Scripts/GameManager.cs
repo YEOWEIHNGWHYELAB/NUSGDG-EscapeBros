@@ -5,12 +5,10 @@ using Photon.Pun;
 
 public class GameManager : MonoBehaviour
 {
-    public static bool playerOneReady;
-    public static bool playerTwoReady;
+    public static bool playerOneReady = false;
+    public static bool playerTwoReady = false;
     public static int currLevel = 0;
     private int maxLevel = 2;
-    private float resetTime = 1.0F;
-    private float timeToReset;
     private PhotonView view;
 
     private Vector2[] levelStartCoord =
@@ -24,7 +22,6 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         view = GetComponent<PhotonView>();
-        timeToReset = resetTime;
         resetReady();
     }
     // Update is called once per frame
@@ -36,25 +33,15 @@ public class GameManager : MonoBehaviour
             else { currLevel++; }
             teleportPlayers(currLevel);
 
-            timeToReset -= Time.deltaTime;
-            if (timeToReset <= 0)
-            {
-                resetReady();
-                timeToReset = resetTime;
-            }   
+
+            resetReady();
         }
     }
 
     void teleportPlayers(int level)
     {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            GameObject.Find("Player1(Clone)").transform.position = levelStartCoord[level];
-        }
-        else
-        {
-            GameObject.Find("Player2(Clone)").transform.position = levelStartCoord[level] + new Vector2(3f, 0f);
-        }
+        GameObject.Find("Player1(Clone)").transform.position = levelStartCoord[level];
+        GameObject.Find("Player2(Clone)").transform.position = levelStartCoord[level] + new Vector2(3f, 0f);
     }
 
     public void resetReady()
