@@ -29,10 +29,12 @@ public class PlayerMovement : MonoBehaviour
     {
         if (view.IsMine)
         {
+            /*
             if (PhotonNetwork.CurrentRoom.PlayerCount == 2)
             {
                 GetComponent<PhotonTransformView>().enabled = false;
             }
+            */
 
             float input = Input.GetAxis("Horizontal");
             rb.velocity = new Vector2(input * speed, rb.velocity.y);

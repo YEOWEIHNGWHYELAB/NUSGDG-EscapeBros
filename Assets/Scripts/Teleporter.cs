@@ -24,12 +24,13 @@ public class Teleporter : MonoBehaviour
             {
                 PlayerReadyController(true, true);
             }
-            
+        }
+        else
+        {
             if (collision.name == "Player2(Clone)")
             {
                 PlayerReadyController(false, true);
             }
-
         }
     }
 
@@ -40,13 +41,16 @@ public class Teleporter : MonoBehaviour
             if (collision.name == "Player1(Clone)")
             {
                 PlayerReadyController(true, false);
+                // Debug.Log("Player 1 Exit");
             }
-
+        }
+        else
+        {
             if (collision.name == "Player2(Clone)")
             {
                 PlayerReadyController(false, false);
+                // Debug.Log("Player 2 Exit");
             }
-
         }
     }
 
